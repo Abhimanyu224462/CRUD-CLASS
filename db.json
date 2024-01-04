@@ -1,0 +1,25 @@
+{
+  "bookings": [
+    {
+      "id": 1,
+      "customerName": "Abhi",
+      "source": "Pune",
+      "destination": "Mumbai",
+      "date": "03-01-2024"
+    },
+    {
+      "id": 2,
+      "customerName": "Suphie",
+      "source": "Pune",
+      "destination": "Nashik",
+      "date": "04-02-2024"
+    },
+    {
+      "customerName": "juber",
+      "source": "bhopal",
+      "destination": "indore",
+      "date": "2024-01-12",
+      "id": 3
+    }
+  ]
+}

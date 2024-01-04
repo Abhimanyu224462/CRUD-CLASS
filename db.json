@@ -20,6 +20,20 @@
       "destination": "indore",
       "date": "2024-01-12",
       "id": 3
+    },
+    {
+      "customerName": "mujjo",
+      "source": "solapur",
+      "destination": "mumbai",
+      "date": "2024-01-12",
+      "id": 4
+    },
+    {
+      "customerName": "Suphie",
+      "source": "Pune",
+      "destination": "Nashik",
+      "date": "04-02-2024",
+      "id": 5
     }
   ]
 }

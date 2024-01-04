@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpService } from '../services/http.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-booking',
@@ -9,14 +10,60 @@ import { HttpService } from '../services/http.service';
 })
 export class CreateBookingComponent {
   userRegForm!:FormGroup
-  constructor(private fb:FormBuilder, private http:HttpService){
 
+  selectedBookingID:string | null = null
+  actionName:string | null = null
+  constructor(private fb:FormBuilder, private http:HttpService, private activateRoute:ActivatedRoute){
+    this.selectedBookingID = this.activateRoute.snapshot.paramMap.get('bookingID')
+    // console.log("Param Data",this.activateRoute)
+    this.actionName = this.activateRoute.snapshot.queryParamMap.get('action')
+    console.log("action",this.actionName)
   }
+
+  
+
 
 ngOnInit(){
   this.createFormStructure()
   // this.createBooking()
+  if(this.actionName === 'EDIT'){
+    this.getbookingDetails()
+  }
+  
 }
+
+  save(){
+    if(this.actionName === 'EDIT'){
+      this.updateBooking()
+    } else {
+      this.createBooking()
+    }
+  }
+
+
+getbookingDetails(){
+  const endpoint = 'bookings/'+this.selectedBookingID
+  this.http.getDataFromServer(endpoint).subscribe({
+    next:(response:any) => {
+      console.log("response Data from ID:", response)
+      this.userRegForm.patchValue(response)
+    }
+  })
+}
+
+updateBooking(){
+  const endpoint = 'bookings/' + this.selectedBookingID
+  const formData = this.userRegForm.value
+  this.http.putDataToServer(endpoint,formData).subscribe({
+    next:(response:any) =>{
+      console.log("data updated successfully")
+      alert("Data Updated Successfully")
+    }
+
+  })
+}
+
+
 
 createFormStructure(){
   this.userRegForm = this.fb.group({

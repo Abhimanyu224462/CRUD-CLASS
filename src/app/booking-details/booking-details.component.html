@@ -1,25 +1,28 @@
-
 <div class="container">
-<table class="table table-hover">
-    
-        <thead>
-          <tr>
-            <th scope="col">Sr.No.</th>
-            <th scope="col">Customer Name</th>
-            <th scope="col">Source</th>
-            <th scope="col">Destination</th>
-            <th scope="col">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of bookingData; let i = index" [routerLink]="['/edit-booking',item.id]" [queryParams]="{'action':'EDIT'}">
-            <th scope="row">{{i+1}}</th>
-            <td>{{item.customerName}}</td>
-            <td>{{item.source}}</td>
-            <td>{{item.destination}}</td>
-            <td>{{item.date}}</td>
-          </tr>
-        </tbody>
-      
+  <table class="table table-hover text-center">
+
+    <thead>
+      <tr>
+        <th scope="col">Action</th>
+        <th scope="col">Sr.No.</th>
+        <th scope="col">Customer Name</th>
+        <th scope="col">Source</th>
+        <th scope="col">Destination</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of bookingData; let i = index">
+        <th scope="row" class="text-center"><i class="bi bi-pen-fill" [routerLink]="['/edit-booking',item.id]"
+            [queryParams]="{'action':'EDIT'}"></i> &nbsp; &nbsp; <i class="bi bi-trash3-fill"
+            (click)="delete(item.id,i)"></i></th>
+        <th scope="row">{{i+1}}</th>
+        <td>{{item.customerName}}</td>
+        <td>{{item.source}}</td>
+        <td>{{item.destination}}</td>
+        <td>{{item.date}}</td>
+      </tr>
+    </tbody>
+
   </table>
 </div>

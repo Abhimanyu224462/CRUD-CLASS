@@ -9,97 +9,98 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./create-booking.component.scss']
 })
 export class CreateBookingComponent {
-  userRegForm!:FormGroup
+  userRegForm!: FormGroup
 
-  selectedBookingID:string | null = null
-  actionName:string | null = null
-  constructor(private fb:FormBuilder, private http:HttpService, private activateRoute:ActivatedRoute){
+  selectedBookingID: string | null = null
+  actionName: string | null = null
+  constructor(private fb: FormBuilder, private http: HttpService, private activateRoute: ActivatedRoute) {
     this.selectedBookingID = this.activateRoute.snapshot.paramMap.get('bookingID')
     // console.log("Param Data",this.activateRoute)
     this.actionName = this.activateRoute.snapshot.queryParamMap.get('action')
-    console.log("action",this.actionName)
+    console.log("action", this.actionName)
   }
 
-  
 
 
-ngOnInit(){
-  this.createFormStructure()
-  // this.createBooking()
-  if(this.actionName === 'EDIT'){
-    this.getbookingDetails()
+
+  ngOnInit() {
+    this.createFormStructure()
+    // this.createBooking()
+    if (this.actionName === 'EDIT') {
+      this.getbookingDetails()
+    }
+
   }
-  
-}
 
-  save(){
-    if(this.actionName === 'EDIT'){
+  save() {
+    if (this.actionName === 'EDIT') {
       this.updateBooking()
     } else {
       this.createBooking()
+      alert("New Booking Created")
     }
   }
 
 
-getbookingDetails(){
-  const endpoint = 'bookings/'+this.selectedBookingID
-  this.http.getDataFromServer(endpoint).subscribe({
-    next:(response:any) => {
-      console.log("response Data from ID:", response)
-      this.userRegForm.patchValue(response)
-    }
-  })
-}
+  getbookingDetails() {
+    const endpoint = 'bookings/' + this.selectedBookingID
+    this.http.getDataFromServer(endpoint).subscribe({
+      next: (response: any) => {
+        console.log("response Data from ID:", response)
+        this.userRegForm.patchValue(response)
+      }
+    })
+  }
 
-updateBooking(){
-  const endpoint = 'bookings/' + this.selectedBookingID
-  const formData = this.userRegForm.value
-  this.http.putDataToServer(endpoint,formData).subscribe({
-    next:(response:any) =>{
-      console.log("data updated successfully")
-      alert("Data Updated Successfully")
-    }
+  updateBooking() {
+    const endpoint = 'bookings/' + this.selectedBookingID
+    const formData = this.userRegForm.value
+    this.http.putDataToServer(endpoint, formData).subscribe({
+      next: (response: any) => {
+        console.log("data updated successfully")
+        alert("Data Updated Successfully")
+      }
 
-  })
-}
+    })
+  }
 
 
 
-createFormStructure(){
-  this.userRegForm = this.fb.group({
-    customerName:['',[Validators.required,Validators.minLength(2),Validators.maxLength(10)]],
-    source:['',[]],
-    destination:['',[Validators.required]],
-    date:['',[Validators.required]]
-  })
-}
+  createFormStructure() {
+    this.userRegForm = this.fb.group({
+      customerName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
+      source: ['', []],
+      destination: ['', [Validators.required]],
+      date: ['', [Validators.required]]
+    })
+  }
 
-submit(){
-  console.log("Data from the Form", this.userRegForm.value)
-  console.log("Entire Form Data", this.userRegForm)
-}
+  submit() {
+    console.log("Data from the Form", this.userRegForm.value)
+    console.log("Entire Form Data", this.userRegForm)
+  }
 
-reset(){
-  this.userRegForm.reset()
-}
+  reset() {
+    this.userRegForm.reset()
+  }
 
-createBooking(){
-  var formData = this.userRegForm.value
-  console.log("Data from Db", this.userRegForm.value)
-  console.log("Data from Form", this.userRegForm)
-  this.http.postDataFromServer('bookings',formData).subscribe({
-    next:(response:any)=>{
-      console.log("Response Recieved", response)
-    },
-    error:(error)=>{
-      console.log("error Occured", error)
-    }
-   
-    // complete:()=>{
+  createBooking() {
+    var formData = this.userRegForm.value
+    console.log("Data from Db", this.userRegForm.value)
+    console.log("Data from Form", this.userRegForm)
+    this.http.postDataFromServer('bookings', formData).subscribe({
+      next: (response: any) => {
+        console.log("Response Recieved", response)
+      },
+      error: (error) => {
+        console.log("error Occured", error)
+      }
 
-    // }
+      // complete:()=>{
 
-  })
-}
+      // }
+
+    })
+  }
 
 }

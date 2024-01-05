@@ -33,4 +33,10 @@ export class HttpService {
 
     return this.httpClient.put(url,requestBody,{headers:this.httpHeaders})
   }
+
+  deleteDataFromServer(endpoint:string):Observable<any>{
+    const url = this.baseUrl + endpoint
+
+    return this.httpClient.delete(url,{headers:this.httpHeaders})
+  }
 }

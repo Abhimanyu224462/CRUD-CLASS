@@ -34,6 +34,13 @@
       "destination": "Nashik",
       "date": "04-02-2024",
       "id": 5
+    },
+    {
+      "customerName": "abhimanyu",
+      "source": "nashik",
+      "destination": "kolkata",
+      "date": "2024-01-19",
+      "id": 6
     }
   ]
 }

@@ -59,6 +59,9 @@ export class CreateBookingComponent {
       next: (response: any) => {
         console.log("data updated successfully")
         alert("Data Updated Successfully")
+      },
+      error: (error) => {
+        console.log("error Occured", error)
       }
 
     })

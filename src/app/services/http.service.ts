@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 
 @Injectable({
@@ -16,27 +16,44 @@ export class HttpService {
     "content-type":"application/json"
   })
 
+  
+
   getDataFromServer(endpoint:string){
     const url = this.baseUrl + endpoint
     
-    return this.httpClient.get(url,{headers:this.httpHeaders})
+    return this.httpClient.get(url,{headers:this.httpHeaders}).pipe(catchError(this.handleHttpError));
   }
 
   postDataFromServer(endpoint:string,requestBody:any):Observable<any>{
     const url = this.baseUrl + endpoint
     
-    return this.httpClient.post(url,requestBody,{headers:this.httpHeaders})
+    return this.httpClient.post(url,requestBody,{headers:this.httpHeaders}).pipe(catchError(this.handleHttpError));
   }
 
   putDataToServer(endpoint:string,requestBody:any):Observable<any>{
     const url = this.baseUrl + endpoint
 
-    return this.httpClient.put(url,requestBody,{headers:this.httpHeaders})
+    return this.httpClient.put(url,requestBody,{headers:this.httpHeaders}).pipe(catchError(this.handleHttpError));
   }
 
   deleteDataFromServer(endpoint:string):Observable<any>{
     const url = this.baseUrl + endpoint
 
-    return this.httpClient.delete(url,{headers:this.httpHeaders})
+    return this.httpClient.delete(url,{headers:this.httpHeaders}).pipe(catchError(this.handleHttpError));
   }
+
+  private handleHttpError (errorResponse:HttpErrorResponse){
+    console.log(errorResponse)
+
+    if(errorResponse.error instanceof ErrorEvent){
+      console.log("Client side error" + errorResponse.error.message)
+    } else {
+      console.log("server side error" + errorResponse.message)
+    }
+
+    return throwError ("We are unable to process your request, please try after some time")
+
+  }
+
+ 
 }

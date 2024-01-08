@@ -14,14 +14,27 @@ export class BookingDetailsComponent {
     this.getData()
   }
 
+  // getData() {
+  //   this.http.getDataFromServer("bookings").subscribe((response: any) => {
+  //     if (response && response.length > 0) {
+  //       this.bookingData = response
+  //       console.log("Booking Data are:", this.bookingData)
+  //     }
+  //   })
+  // }
+
   getData() {
-    this.http.getDataFromServer("bookings").subscribe((response: any) => {
-      if (response && response.length > 0) {
-        this.bookingData = response
-        console.log("Booking Data are:", this.bookingData)
+    this.http.getDataFromServer("bookings").subscribe({
+      next:(response:any) => {
+        if (response && response.length > 0) {
+              this.bookingData = response
+      }},
+          error:(error:any) => {
+        alert(error)
       }
     })
   }
+
 
   delete(id: number, index: number) {
     const selection = confirm("sach mein bhai??")
@@ -34,7 +47,7 @@ export class BookingDetailsComponent {
           this.bookingData.splice(index, 1)
         },
         error: (error) => {
-
+          alert(error)
         }
       })
     }

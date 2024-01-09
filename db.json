@@ -8,13 +8,6 @@
       "date": "03-01-2024"
     },
     {
-      "id": 2,
-      "customerName": "Suphie",
-      "source": "Pune",
-      "destination": "Nashik",
-      "date": "04-02-2024"
-    },
-    {
       "customerName": "mujjo",
       "source": "solapur",
       "destination": "delhi",
@@ -41,6 +34,13 @@
       "destination": "nashik",
       "date": "2024-01-17",
       "id": 6
+    },
+    {
+      "customerName": "abhimanyu",
+      "source": "juber",
+      "destination": "abhimanyu",
+      "date": "2024-01-11",
+      "id": 7
     }
   ]
 }

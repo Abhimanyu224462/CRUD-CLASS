@@ -7,7 +7,8 @@ import { CreateBookingComponent } from './create-booking/create-booking.componen
 import { BookingDetailsComponent } from './booking-details/booking-details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import {HttpClientModule} from '@angular/common/http'
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
+import { AppInterceptor } from './app.interceptor';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,11 @@ import {HttpClientModule} from '@angular/common/http'
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{
+    useClass:AppInterceptor,
+    provide:HTTP_INTERCEPTORS,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

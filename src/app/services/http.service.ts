@@ -8,12 +8,15 @@ import { Observable, catchError, throwError } from 'rxjs';
 })
 export class HttpService {
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient:HttpClient) { 
+    const token = sessionStorage.getItem("token")
+  }
 
   baseUrl: string ="http://localhost:3000/"
 
   httpHeaders:HttpHeaders = new HttpHeaders({
-    "content-type":"application/json"
+    "content-type":"application/json",
+    "authorisation" : "token"
   })
 
   
@@ -21,7 +24,7 @@ export class HttpService {
   getDataFromServer(endpoint:string){
     const url = this.baseUrl + endpoint
     
-    return this.httpClient.get(url,{headers:this.httpHeaders}).pipe(catchError(this.handleHttpError));
+    return this.httpClient.get(url,{headers:this.httpHeaders});
   }
 
   postDataFromServer(endpoint:string,requestBody:any):Observable<any>{
